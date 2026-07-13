@@ -30,7 +30,3 @@ jobs:
       - name: Print Runner Operating System
         run: |
           echo "Runner OS: $RUNNER_OS"
-
-      - name: Fail the Workflow
-        run: |
-          exit 1
