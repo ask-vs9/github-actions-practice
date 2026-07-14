@@ -1,0 +1,29 @@
+name: Manual Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select deployment environment"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  manual-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Print Selected Environment
+        run: |
+          echo "Deployment Environment: ${{ github.event.inputs.environment }}"
+
+      - name: Print Current Date
+        run: |
+          date
