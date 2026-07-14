@@ -1,0 +1,32 @@
+name: Matrix Build
+
+on:
+  push:
+
+jobs:
+  matrix-job:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version:
+          - "3.10"
+          - "3.11"
+          - "3.12"
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Print Python Version
+        run: |
+          python --version
+
+      - name: Print Selected Python Version
+        run: |
+          echo "Running Python ${{ matrix.python-version }}"
