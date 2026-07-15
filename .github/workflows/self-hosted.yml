@@ -2,26 +2,23 @@ name: Self Hosted Runner
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
   self-hosted-job:
-    runs-on: self-hosted
+    runs-on: [self-hosted, my-linux-runner]
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Print Hostname
+      - name: Show Hostname
         run: hostname
 
-      - name: Print Working Directory
+      - name: Show Working Directory
         run: pwd
 
-      - name: Create a File
+      - name: Create File
         run: |
-          echo "Hello from my self-hosted runner!" > self-hosted-test.txt
-
-      - name: Verify File Exists
-        run: |
+          touch myfile.txt
           ls -l
-          cat self-hosted-test.txt
