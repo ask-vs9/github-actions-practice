@@ -21,4 +21,5 @@ jobs:
 
     steps:
       - name: Display Date
-        run: echo "Today's date from previous job is: ${{ needs.generate_date.outputs.today }}"
+        run: |
+          echo "Today's date from previous job is: ${{ needs.generate_date.outputs.today }}"
