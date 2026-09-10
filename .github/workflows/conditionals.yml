@@ -1,0 +1,45 @@
+name: Day 43 - Conditionals
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  conditional-steps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run only on main branch
+        if: github.ref == 'refs/heads/main'
+        run: echo "This step runs only on the main branch"
+
+      - name: Intentional Failure
+        run: |
+          echo "This step will fail"
+          exit 1
+
+      - name: Run after failure
+        if: failure()
+        run: echo "The previous step failed, so this step is running"
+
+  continue-error:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Failing Step
+        continue-on-error: true
+        run: |
+          echo "This step will fail, but the job will continue"
+          exit 1
+
+      - name: Step After Error
+        run: echo "This step still runs because continue-on-error is true"
+
+  push-only:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Push Only Job
+        run: echo "This job runs only for push events"
