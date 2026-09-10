@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  generate-date:
+  generate_date:
     runs-on: ubuntu-latest
 
     outputs:
@@ -15,10 +15,10 @@ jobs:
         id: date
         run: echo "date=$(date)" >> "$GITHUB_OUTPUT"
 
-  display-date:
-    needs: generate-date
+  display_date:
+    needs: generate_date
     runs-on: ubuntu-latest
 
     steps:
       - name: Display Date
-        run: echo "Today's date from previous job is: ${{ needs.generate-date.outputs.today }}"
+        run: echo "Today's date from previous job is: ${{ needs.generate_date.outputs.today }}"
