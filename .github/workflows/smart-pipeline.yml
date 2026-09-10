@@ -1,0 +1,35 @@
+name: Day 43 - Smart Pipeline
+
+on:
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Lint
+        run: echo "Running lint checks"
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run Tests
+        run: echo "Running tests"
+
+  summary:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show Branch Type
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "This is a main branch push"
+          else
+            echo "This is a feature branch push"
+          fi
+
+      - name: Show Commit Message
+        run: echo "Commit message: ${{ github.event.head_commit.message }}"
