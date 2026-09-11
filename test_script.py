@@ -2,7 +2,7 @@ def add(a, b):
     return a + b
 
 
-result = add(10, 25)
+result = add(10, 20)
 
 if result == 30:
     print("Test passed")
