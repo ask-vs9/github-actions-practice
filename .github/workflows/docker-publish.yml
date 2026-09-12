@@ -2,7 +2,6 @@ name: Day 45 - Docker Build and Push
 
 on:
   push:
-  pull_request:
 
 jobs:
   docker:
@@ -12,16 +11,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Get Short Commit SHA
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set Short SHA
         id: vars
         shell: bash
         run: echo "short_sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Login to Docker Hub
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
@@ -31,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/day45-docker-cicd:latest
-            ${{ secrets.DOCKER_USERNAME }}/day45-docker-cicd:sha-${{ steps.vars.outputs.short_sha }}
+            ask09/day45-docker-cicd:latest
+            ask09/day45-docker-cicd:sha-${{ steps.vars.outputs.short_sha }}
