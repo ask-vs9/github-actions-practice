@@ -13,3 +13,12 @@ jobs:
       environment: "production"
     secrets:
       docker_token: ${{ secrets.DOCKER_TOKEN }}
+
+  show-version:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show Build Version
+        run: |
+          echo "Build version from reusable workflow: ${{ needs.build.outputs.build_version }}"
