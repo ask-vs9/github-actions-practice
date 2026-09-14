@@ -1,0 +1,22 @@
+name: Smart Path Triggers
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+    paths:
+      - 'src/**'
+      - 'app/**'
+
+jobs:
+  path-trigger-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show Trigger Information
+        run: |
+          echo "Workflow triggered by a push."
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "This workflow runs only when src/** or app/** changes."

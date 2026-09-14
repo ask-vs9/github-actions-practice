@@ -1,0 +1,21 @@
+name: Smart Docs Ignore
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+
+jobs:
+  docs-ignore-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show Trigger Information
+        run: |
+          echo "Workflow triggered by a push."
+          echo "Branch: ${{ github.ref_name }}"
+          echo "This workflow skips pushes containing only Markdown/docs changes."

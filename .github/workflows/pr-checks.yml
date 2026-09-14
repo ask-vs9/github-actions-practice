@@ -1,0 +1,88 @@
+name: PR Validation Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  file-size-check:
+    name: File Size Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check Changed File Sizes
+        shell: bash
+        run: |
+          echo "Checking changed files for size limits..."
+
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          oversized_files=0
+
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              size=$(wc -c < "$file")
+
+              if [ "$size" -gt 1048576 ]; then
+                echo "ERROR: $file is larger than 1 MB ($size bytes)"
+                oversized_files=$((oversized_files + 1))
+              else
+                echo "OK: $file ($size bytes)"
+              fi
+            fi
+          done < <(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+
+          if [ "$oversized_files" -gt 0 ]; then
+            echo "File size check failed."
+            exit 1
+          fi
+
+          echo "File size check passed."
+
+  branch-name-check:
+    name: Branch Name Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate Branch Name
+        shell: bash
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+
+          echo "Checking branch: $BRANCH_NAME"
+
+          if [[ "$BRANCH_NAME" =~ ^feature/.+ ]] || \
+             [[ "$BRANCH_NAME" =~ ^fix/.+ ]] || \
+             [[ "$BRANCH_NAME" =~ ^docs/.+ ]]; then
+            echo "Branch name is valid: $BRANCH_NAME"
+          else
+            echo "ERROR: Invalid branch name: $BRANCH_NAME"
+            echo "Allowed patterns:"
+            echo "  feature/*"
+            echo "  fix/*"
+            echo "  docs/*"
+            exit 1
+          fi
+
+  pr-body-check:
+    name: PR Description Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR Description
+        shell: bash
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          if [ -z "$PR_BODY" ]; then
+            echo "::warning::PR description is empty. Please add a meaningful description."
+          else
+            echo "PR description is present."
+          fi
