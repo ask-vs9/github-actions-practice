@@ -62,6 +62,22 @@ jobs:
             ${{ inputs.image_name }}:${{ inputs.tag }}
             ${{ inputs.image_name }}:sha-${{ steps.vars.outputs.short_sha }}
 
+      - name: Scan Docker Image with Trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: '${{ inputs.image_name }}:${{ inputs.tag }}'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+          exit-code: '1'
+
+      - name: Upload Trivy Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-results
+          path: trivy-results.sarif
+
       - name: Set Image URL
         id: image
         run: |
