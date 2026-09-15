@@ -2,6 +2,12 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY test_script.py .
+COPY app/requirements.txt .
 
-CMD ["python", "test_script.py"]
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ .
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
