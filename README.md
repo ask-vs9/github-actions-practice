@@ -1,3 +1,10 @@
+[![Reusable Build and Test](https://github.com/ask-vs9/github-actions-practice/actions/workflows/reusable-build-test.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/reusable-build-test.yml)
+[![Reusable Docker Build and Push](https://github.com/ask-vs9/github-actions-practice/actions/workflows/reusable-docker.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/reusable-docker.yml)
+[![PR Pipeline](https://github.com/ask-vs9/github-actions-practice/actions/workflows/pr-pipeline.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/pr-pipeline.yml)
+[![Main Branch Pipeline](https://github.com/ask-vs9/github-actions-practice/actions/workflows/main-pipeline.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/main-pipeline.yml)
+[![Scheduled Health Check](https://github.com/ask-vs9/github-actions-practice/actions/workflows/health-check.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/health-check.yml)
+
+
 # GitHub Actions Capstone
 
 An end-to-end CI/CD project using GitHub Actions, reusable workflows, Docker, Docker Hub, and automated health checks.
