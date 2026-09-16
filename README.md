@@ -3,7 +3,7 @@
 [![PR Pipeline](https://github.com/ask-vs9/github-actions-practice/actions/workflows/pr-pipeline.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/pr-pipeline.yml)
 [![Main Branch Pipeline](https://github.com/ask-vs9/github-actions-practice/actions/workflows/main-pipeline.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/main-pipeline.yml)
 [![Scheduled Health Check](https://github.com/ask-vs9/github-actions-practice/actions/workflows/health-check.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/health-check.yml)
-
+[![Smart Path Triggers](https://github.com/ask-vs9/github-actions-practice/actions/workflows/smart-triggers.yml/badge.svg)](https://github.com/ask-vs9/github-actions-practice/actions/workflows/smart-triggers.yml)
 
 # GitHub Actions Capstone
 
