@@ -8,7 +8,20 @@ on:
       - opened
       - synchronize
 
+permissions:
+  contents: read
+
 jobs:
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Dependencies for Vulnerabilities
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: critical
+
   build-test:
     name: Build and Test
     uses: ./.github/workflows/reusable-build-test.yml
@@ -18,10 +31,13 @@ jobs:
 
   pr-comment:
     name: PR Check Message
-    needs: build-test
+    needs:
+      - build-test
+      - dependency-review
     runs-on: ubuntu-latest
 
     steps:
       - name: Show PR Check Result
         run: |
           echo "PR checks passed for branch: ${{ github.head_ref }}"
+          echo "Dependency review passed."
